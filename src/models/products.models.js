@@ -1,8 +1,8 @@
 const { DataTypes } = require('sequelize')
 
-const db = require('../utils/products.db')
+const db = require('../utils/database')
 
-const Products = db.define('products', {
+const Products = db.define('Products', {
     id: {
         primaryKey: true,
         type: DataTypes.UUID,
@@ -10,7 +10,7 @@ const Products = db.define('products', {
     },
     name: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false
     },
     category: {
         type: DataTypes.STRING,
@@ -23,6 +23,7 @@ const Products = db.define('products', {
     isAvailable: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        field: 'is_available'
     }
 })
 

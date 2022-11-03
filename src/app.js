@@ -1,19 +1,30 @@
 const express = require('express')
 
-const productRouter = require('./products/products.router')
+const db = require('./utils/products.db')
+const initModels = require('./models/initModels')
+const config = require('./config')
+const productsRouter = require('./products/products.router')
 
 const app = express()
 
+db.authenticate()
+    .then(() => console.log('DB succesfully authenticated!'))
+    .catch((err) => console.log(err))
+
+db.sync()
+    .then(() => console.log('DB synced!'))
+    .catch((err) => console.log(err))
+
+initModels()
+
 app.use(express.json())
 
-app.get("/", (req, res)=>{
-    res.status(200).json({message: 'OK!'})
+app.get('/', (req, res) => {
+    res.status(200).json({message: 'Ok!'})
 })
 
-app.use("/", productRouter)
+app.use('/products', productsRouter)
 
-const port = 8000;
-
-app.listen(port, ()=>{
-    console.log(`Server started at port ${port}`);
+app.listen(config.port, () => {
+    console.log(`Server started at port ${config.port}!`)
 })
